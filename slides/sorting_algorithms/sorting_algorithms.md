@@ -35,7 +35,6 @@ hideInToc: true
 </div>
 
 ---
-
 hideInToc: true
 ---
 
@@ -172,7 +171,6 @@ void selectionSort(int arr[], int arrSize) {
 
 -->
 ---
-
 layout: default
 ---
 
@@ -574,7 +572,6 @@ otherwise, the right value goes in and j is incremented - k is incremented to ke
 -->
 
 ---
-
 hideInToc: true
 ---
 
