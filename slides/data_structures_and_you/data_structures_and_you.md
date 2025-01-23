@@ -62,13 +62,15 @@ Data structures are a way for us to represent data in our applications.
 
 :: right ::
 
-<v-clicks>
+<v-click>
 
 The primitive types in C++ are:
 
+</v-click>
+
 <<< @/snippets/primitives.cpp cpp {hide|1|2|3|4|5|all}
 
-</v-clicks>
+
 
 
 <!-- Simply put, they’re a way for us to represent data in our applications – we look at them as two types; primitive and non-primitive (or advanced). Primitive types are usually those provided by the language itself; for example, in C++ we have bool, int, float, char, etc. -->
@@ -240,9 +242,9 @@ std::cout << matrix[1][1] // prints 1!
 ````
 </v-click>
 
-<v-click>
+<v-click at="7">
 
-$$ {1|2-3}
+$$ {hide|1|2-3}
 \begin{aligned}
   Address[i][j] = Base Address(BA) +\omega(n(i-1)+(j-1)) \\
    Address[0][3] = \omega(3(0-1)+(3-1)) \\
@@ -296,14 +298,9 @@ std::string words[] = {"hello", "world", "example", "string"};
 ```cpp
 std::string words[] = {"hello", "world", "example", "string"};
 
-for (int i = 0; i < 4; ++i) 
-```
-```cpp
-std::string words[] = {"hello", "world", "example", "string"};
-
-for (int i = 0; i < 4; ++i) 
+for (int i = 0; i < 4; ++i)
 {
-  std::string word = words[i];
+
 }
 ```
 ```cpp
@@ -311,9 +308,16 @@ std::string words[] = {"hello", "world", "example", "string"};
 
 for (int i = 0; i < 4; ++i) 
 {
-  std::string word = words[i];
-  if (!word.empty()) {
-    
+  std::cout << words[i] << '\n';
+}
+```
+```cpp
+std::string words[] = {"hello", "world", "example", "string"};
+
+for (int i = 0; i < 4; ++i) 
+{
+  if (!words[i].empty()) {
+       
   }
 }
 ```
@@ -322,9 +326,8 @@ std::string words[] = {"hello", "world", "example", "string"};
 
 for (int i = 0; i < 4; ++i) 
 {
-  std::string word = words[i];
-  if (!word.empty()) {
-    word[0] = std::toupper(word[0]);      
+  if (!words[i].empty()) {
+    words[i][0] = std::toupper(words[i][0]);      
   }
 }
 ```
@@ -356,9 +359,13 @@ advanced data structures or objects, we might want to call a method on each elem
 
 [click] Here we have an array of strings, and we want to capitalize the first letter of each word.
 
-[click] We can do this by iterating over the array and then accessing each element in turn.
+[click] We can do this by iterating over the array 
 
-[click] We can then check if the element is empty and if not, capitalize the first letter.
+[click] and then accessing each element in turn.
+
+[click] We can then check if the element is empty 
+
+[click] if not, we can capitalize the first letter.
 
 [click] By starting at the end of the array, we can also traverse it in reverse.
 -->
@@ -368,19 +375,19 @@ advanced data structures or objects, we might want to call a method on each elem
 ## Insertion
 <div class="container">
 
-<div v-if="$slidev.nav.clicks < 8">
+<div v-if="$slidev.nav.clicks > 0 && $slidev.nav.clicks < 8">
 
 ## At the beginning
 
 </div>
 
-<div v-else-if="$slidev.nav.clicks < 9">
+<div v-else-if="$slidev.nav.clicks > 1 && $slidev.nav.clicks < 9">
 
 ## At a specific point
 
 </div>
 
-<div v-else>
+<div v-else-if="$slidev.nav.clicks > 9">
 
 ## At the end
 
@@ -388,7 +395,7 @@ advanced data structures or objects, we might want to call a method on each elem
 
 
 <div class="columns-2">
-<v-click>
+<v-click at="2">
 
 <div class="w-full break-after-column"> 
 ````md magic-move {at:2}
@@ -480,7 +487,7 @@ bool InsertIntoArrayAtEnd(int* numbersArray, int arrMax,
 <!-- Due to the fixed size nature of arrays, inserting an element without overwriting existing data requires some work. 
 There are three places we can insert; at the beginning, at a specific point and at the end. 
 
-[click] For insertion at the beginning, we have to move all existing elements along one slot in the array - [click] the algorithm for which looks something like this:
+[click] For insertion at the beginning, we have to move all existing elements along one slot in the array - [click] the algorithm for which looks something like this. A quick comment on the C++ slide of things here; when we use an array as an argument in a function - it's not passed-by-value, instead the array decays to a pointer to the memory location at the start of the array...
 
 [click] we cannot insert anything if the array is full - N is the number of existing elements and SIZE is the max size of the array.
 
@@ -489,6 +496,8 @@ There are three places we can insert; at the beginning, at a specific point and 
 [click] then we iterate while I is greater to or equal to 0, each iteration we set copy the current element to the position one "behind" where we are and I is decremented
 
 [click] once I is equal to 0, we're at the start of the array and can insert the new element at the first index 
+
+[click] Let's just see that all lit up...
 
 [click] inserting at a specific position is the same, we move the elements back until we reach the desired position and then we set the element to the new value. 
 
@@ -525,7 +534,7 @@ There are three places we can insert; at the beginning, at a specific point and 
 
 <div class="w-full break-after-column"> 
 ````md magic-move {at:2}
-```text {none|1,6|2|3-5|all}
+```text {1,6|2|3-5|all}
 START
 SET I = 0
 WHILE I < N-1
@@ -552,7 +561,7 @@ END
 <div>
 
 ````md magic-move{at:2}
-```cpp {none|1-3,12|4|5-9|all}
+```cpp {1-3,12|4|5-9|all}
 int DeleteFromArrayAtBeginning(int* numbersArray, 
   int arrMax, int arrSize)
 {
@@ -595,13 +604,13 @@ int DeleteFromArrayAtEnd(int arrSize)
 
 
 
-<!-- Deletion is similar, with algorithms for deleting an element at the start, at a specified position and at the end. [click]
+<!-- Deletion is similar, with algorithms for deleting an element at the start, at a specified position and at the end.
 
 [click] The steps for deleting at the beginning are:
 
 [click] set the index to 0
 
-[click] while the index is less than the number of elements - 1, copy the element at the next index to the current index
+[click] while the index is less than the number of elements - 1, copy the element at the next index to the current index [click] 
 
 [click] deleting at a specific position is similar, rather than starting at 0 we start at position.
 
