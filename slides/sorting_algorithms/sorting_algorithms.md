@@ -608,9 +608,17 @@ int main() {
 
 ---
 
-# Next time
+# Summary
 
-- Linked Lists
-- Complexity
-  - $O$, $\Theta$, $\Omega$
-- Maybe a little more sorting...
+- Overview of Data Structures
+- Arrays
+  - Operations
+    - Traversal
+    - Insertion
+    - Deletion
+    - Searching
+- Sorting Algorithms
+  - Bubble Sort
+  - Selection Sort
+  - Insertion Sort
+  - Merge Sort
