@@ -387,7 +387,7 @@ advanced data structures or objects, we might want to call a method on each elem
 
 </div>
 
-<div v-else-if="$slidev.nav.clicks > 9">
+<div v-else-if="$slidev.nav.clicks > 8">
 
 ## At the end
 
@@ -510,13 +510,13 @@ There are three places we can insert; at the beginning, at a specific point and 
 ## Deletion
 <div class="container">
 
-<div v-if="$slidev.nav.clicks < 6">
+<div v-if="$slidev.nav.clicks < 5">
 
 ## At the beginning
 
 </div>
 
-<div v-else-if="$slidev.nav.clicks < 7">
+<div v-else-if="$slidev.nav.clicks < 6">
 
 ## At a specific point
 
