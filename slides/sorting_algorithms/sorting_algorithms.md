@@ -43,7 +43,6 @@ hideInToc: true
 <toc />
 
 ---
-
 layout: quote
 transition: fade-out
 hideInToc: true
