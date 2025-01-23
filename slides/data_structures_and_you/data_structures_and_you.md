@@ -61,11 +61,12 @@ Data structures are a way for us to represent data in our applications.
 </v-clicks>
 
 :: right ::
+
 <v-clicks>
 
 The primitive types in C++ are:
 
-<<< @/snippets/primitives.cpp cpp {1|2|3|4|5|all}
+<<< @/snippets/primitives.cpp cpp {hide|1|2|3|4|5|all}
 
 </v-clicks>
 
@@ -284,7 +285,7 @@ The most common operations are:
 
 ---
 
-# Traversal
+## Traversal
 The process of visiting each element of an array
 
 <v-click>
@@ -364,7 +365,7 @@ advanced data structures or objects, we might want to call a method on each elem
 
 ---
 
-# Insertion
+## Insertion
 <div class="container">
 
 <div v-if="$slidev.nav.clicks < 8">
@@ -497,7 +498,7 @@ There are three places we can insert; at the beginning, at a specific point and 
 
 ---
 
-# Deletion
+## Deletion
 <div class="container">
 
 <div v-if="$slidev.nav.clicks < 6">
@@ -609,7 +610,7 @@ int DeleteFromArrayAtEnd(int arrSize)
 
 ---
 
-# Searching
+## Searching
 Linear search iterates over an array from start to finish
 
 <v-click>
@@ -663,7 +664,7 @@ Otherwise, we return -1
 ---
 layout: statement
 ---
-# Sorting
+## Sorting
 
 <!--
 Sorting is it's own entire thing, so we'll call a break here and come back to that shortly!
