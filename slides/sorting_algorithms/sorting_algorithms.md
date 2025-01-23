@@ -35,19 +35,23 @@ hideInToc: true
 </div>
 
 ---
+
 hideInToc: true
 ---
 
 # Today's topics
+
 <toc />
 
 ---
+
 layout: quote
 transition: fade-out
 hideInToc: true
 ---
 
 # "To put a number of things in an order or to separate them into groups"
+
 -- Cambridge Dictionary
 
 <!--
@@ -61,6 +65,7 @@ hideInToc: true
 ---
 
 # Selection Sort
+
 In-place sort, $O(n^2)$ time complexity
 
 ````md magic-move
@@ -167,9 +172,12 @@ void selectionSort(int arr[], int arrSize) {
 
 -->
 ---
+
 layout: default
 ---
+
 # Bubble Sort
+
 Adaptive in-place sort, $O(n^2)$ complexity
 
 <style>
@@ -307,6 +315,7 @@ void bubbleSort(int arr[], int arrSize) {
 }
 ```
 ````
+
 </div>
 
 </div>
@@ -334,6 +343,7 @@ Here's how that looks in code:
 ---
 
 # Insertion Sort
+
 Adaptive, in-place sort, $O(n^2)$ complexity
 
 ````md magic-move
@@ -416,6 +426,7 @@ Here's how that looks in code:
 ---
 
 # Merge Sort
+
 Divide-and-conquer sort, $O(n\,log_2\,n)$ complexity, $O(n)$ size & $O(n)$ auxiliary
 
 <v-click>
@@ -458,8 +469,8 @@ void mergeSort(int arr[], int start, int end) {
 }
 ```
 ````
-</v-click>
 
+</v-click>
 
 <!-- Merge sort is a recursive algorithm that works by splitting the data set into two over each iteration until there is one element in each set (an element of one set is sorted after all!). These sets are then merged into a single sorted sequence.
 This requires an additional array of the same size as the unsorted array to put the resulting merged values into. The n log2 n worst case complexity means it's efficient on large data sets, but unlike the other sorts we have looked at so far, we have to consider the size complexity too - as we require sufficient storage for each of the elements as they are broken down and then the temporary storage as they are merged back together (the auxiliary size)
@@ -481,6 +492,7 @@ This is one where pseudo code does a little bit less to help explain, so we'll l
 ---
 
 # The Merge function
+
 Nothing too complex...
 <div class="columns-3">
 
@@ -535,6 +547,7 @@ void merge(int arr[], int start,
   delete[] R;
 }
 ```
+
 </div>
 
 <!-- Ok, that might not be entirely true - this is the longest bit of code we've looked at so far...
@@ -561,10 +574,11 @@ otherwise, the right value goes in and j is incremented - k is incremented to ke
 -->
 
 ---
+
 hideInToc: true
 ---
 
-# Or...
+# Or
 
 <div class="columns-2">
 
@@ -590,15 +604,15 @@ int main() {
 
   std::array<int, ArrayMax> numbers;
 
-	srand(time(0));
+ srand(time(0));
 
-	for (int i = 0; i < ArrayMax; i++)
-	{
-		numbers[i] = rand() % 256;
-	}	
+ for (int i = 0; i < ArrayMax; i++)
+ {
+  numbers[i] = rand() % 256;
+ } 
 
   mergeSort(numbers.begin(), numbers.end());
-	return 0;
+ return 0;
 }
 ```
 
