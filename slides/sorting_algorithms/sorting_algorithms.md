@@ -227,10 +227,10 @@ END
 START
   SWAPPED = TRUE
   WHILE SWAPPED == TRUE DO:
-  SWAPPED = FALSE  
+    SWAPPED = FALSE  
     FOR I = 0 TO N-2
    
-  END
+    END
   END
 END
 ```
@@ -238,12 +238,12 @@ END
 START
   SWAPPED = TRUE
   WHILE SWAPPED == TRUE DO:
-  SWAPPED = FALSE  
+    SWAPPED = FALSE  
     FOR I = 0 TO N-2
-    IF ARR[I] > ARR[I+1]
-      SWAP ARR[I] ARR[I+1]
-      SWAPPED = TRUE
-    END
+      IF ARR[I] > ARR[I+1]
+        SWAP ARR[I] ARR[I+1]
+        SWAPPED = TRUE
+      END
   END
   END
 END
@@ -268,7 +268,7 @@ void bubbleSort(int arr[], int arrSize) {
 void bubbleSort(int arr[], int arrSize) {
   bool swapped = true;
   while (swapped) {
-  swapped = false;
+    swapped = false;
   }     
 }
 ```
@@ -276,7 +276,7 @@ void bubbleSort(int arr[], int arrSize) {
 void bubbleSort(int arr[], int arrSize) {
   bool swapped = true;
   while (swapped) {
-  swapped = false;
+    swapped = false;
     for (int i = 0; i < arrSize-1; i++) {
 
     } 
@@ -287,7 +287,7 @@ void bubbleSort(int arr[], int arrSize) {
 void bubbleSort(int arr[], int arrSize) {
   bool swapped = true;
   while (swapped) {
-  swapped = false;
+    swapped = false;
     for (int i = 0; i < arrSize-1; i++) {
       if (arr[i] < arr[i + 1]) {
         swap(arr[i], arr[i+1]);
@@ -301,7 +301,7 @@ void bubbleSort(int arr[], int arrSize) {
 void bubbleSort(int arr[], int arrSize) {
   bool swapped = false;
   do {
-  swapped = false;
+    swapped = false;
     for (int i = 0; i < arrSize-1; i++) {
       if (arr[i] < arr[i + 1]) {
         swap(arr[i], arr[i+1]);
@@ -367,7 +367,7 @@ END
 START
   FOR I = 1 TO N-1
     J = I
-    WHILE J > 0 AND ARR[J] < ARR[J - 1]
+    WHILE J > 0 AND ARR[J] < ARR[J-1]
       
     END
   END
@@ -377,7 +377,7 @@ END
 START
   FOR I = 1 TO N-1
     J = I
-    WHILE J > 0 AND ARR[J] < ARR[J - 1]
+    WHILE J > 0 AND ARR[J] < ARR[J-1]
       SWAP ARR[J] ARR[J-1]
       J = J - 1
     END
@@ -392,8 +392,8 @@ END
 void insertionSort(int arr[], int arrSize) {
   for (int i = 1; i < arrSize - 1; i++) {
     int j = i;
-    while (j > 0 && arr[j] < arr[j - 1]) {
-      swap(arr[j], arr[j - 1]);
+    while (j > 0 && arr[j] < arr[j-1]) {
+      swap(arr[j], arr[j-1]);
       j--;
     }
   }
@@ -533,7 +533,7 @@ void merge(int arr[], int start,
   }
 ```
 
-```cpp{hide|1-5|7-8|all}{at:8,lines:true}
+```cpp{hide|1-5|7-8|all}{at:8}
   while (j < n2) {
     arr[k] = R[j];
     j++;
@@ -600,15 +600,15 @@ int main() {
 
   std::array<int, ArrayMax> numbers;
 
- srand(time(0));
+  srand(time(0));
 
- for (int i = 0; i < ArrayMax; i++)
- {
-  numbers[i] = rand() % 256;
- } 
+  for (int i = 0; i < ArrayMax; i++)
+  {
+    numbers[i] = rand() % 256;
+  } 
 
   mergeSort(numbers.begin(), numbers.end());
- return 0;
+  return 0;
 }
 ```
 
@@ -620,6 +620,10 @@ int main() {
 
 # Summary
 
+<div class="columns-2">
+
+<div class="break-after-column">
+
 - Overview of Data Structures
 - Arrays
   - Operations
@@ -627,9 +631,15 @@ int main() {
     - Insertion
     - Deletion
     - Searching
+
+</div>
+<div>
+
 - Sorting Algorithms
   - Bubble Sort
   - Selection Sort
   - Insertion Sort
   - Merge Sort
-  
+</div>
+
+  </div>
