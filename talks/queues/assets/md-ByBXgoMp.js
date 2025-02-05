@@ -1,0 +1,12 @@
+import{_}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang-D6Z3RAj3.js";import{d as N,z as g,o as d,b as h,f as k,h as T,c as v,k as p,e,l as $,m as C,E as n,q as A,s as D,D as c}from"./modules/vue-B8TT9nkU.js";import{u as f,f as S}from"./slidev/context-v9EgIUff.js";import"./modules/unplugin-icons-hHO42PZ1.js";import"./index-wW7DA9fs.js";import"./modules/shiki-eY2d4ef4.js";function u(s){return s.startsWith("/")?"/talks/queues"+s.slice(1):s}function W(s,t=!1,i="cover",a="center"){const l=s&&(s[0]==="#"||s.startsWith("rgb")),r={background:l?s:void 0,color:s&&!l?"white":void 0,backgroundImage:l?void 0:s?t?`linear-gradient(#0005, #0008), url(${u(s)})`:`url("${u(s)}")`:void 0,backgroundRepeat:"no-repeat",backgroundPosition:a,backgroundSize:i};return r.background||delete r.background,r}const B=N({__name:"image-dimmed",props:{image:{type:String}},setup(s){f();const t=s,i=g(()=>W(t.image,!0));return(a,l)=>(d(),h("div",{class:"slidev-layout w-full h-full",style:T(i.value)},[k(a.$slots,"default")],4))}}),b={__name:"slides.md__slidev_6",setup(s){const{$slidev:t,$nav:i,$clicksContext:a,$clicks:l,$page:r,$renderContext:O,$frontmatter:m}=f();return a.setup(),(x,o)=>{const E=_;return d(),v(B,A(D(c(S)(c(m),5))),{default:p(()=>[o[1]||(o[1]=e("h1",null,"Enqueue",-1)),$(E,C({},{ranges:["hide","1,12","2-4","5,9","6-7","8","10-11","all"]}),{default:p(()=>o[0]||(o[0]=[e("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[e("code",{class:"language-text"},[e("span",{class:"line"},[e("span",null,"START [VALUE]")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  ALLOCATE NEW_NODE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  NEW_NODE.VALUE = VALUE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  NEW_NODE.NEXT = NULL")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  IF IS_EMPTY")]),n(`
+`),e("span",{class:"line"},[e("span",null,"    SET FRONT = NEW_NODE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"    SET BACK = NEW_NODE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"    RETURN")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  END")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  SET BACK.NEXT = NEW_NODE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"  SET BACK = NEW_NODE")]),n(`
+`),e("span",{class:"line"},[e("span",null,"END")])])],-1)])),_:1},16)]),_:1},16)}}};export{b as default};
