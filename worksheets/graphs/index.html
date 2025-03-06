@@ -121,7 +121,7 @@ adjacency_list<span class="token punctuation">[</span><span class="token number"
 <span class="token punctuation">{</span>
   _connections<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">new</span> Connection<span class="token punctuation">{</span>to<span class="token punctuation">,</span> cost<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>As soon as we see the use of <code>new</code> we should be thinking about how that memory is cleared up - in this case, it makes sense to have a destructor for <code>Node</code> that will delete all the <code>Connection</code> instances that the node contains when the node is destroyed:</p>
+<p>As soon as we see the use of <code>new</code> we should be thinking about how that memory is cleared up - in this case, it makes sense to have a destructor for <code>Node</code> that will delete all the <code>Connection</code> instances that the node contains when it is released from memory:</p>
 <h3><code>node.h</code> <!-- omit from toc --></h3>
 <pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -133,16 +133,11 @@ adjacency_list<span class="token punctuation">[</span><span class="token number"
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
   <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-
-## Getting connections
-
-Once we<span class="token number">'</span>ve got a way to add connections<span class="token punctuation">,</span> we have to be able to get that list of connections back again <span class="token operator">-</span> <span class="token operator">and</span> so we need to add that to `Node`<span class="token punctuation">;</span> it<span class="token number">'</span>s fairly straightforward<span class="token punctuation">,</span> we can have a function that will just <span class="token keyword">return</span> a copy of the _connections vector<span class="token operator">:</span>
-
-### `node<span class="token punctuation">.</span>h` <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> omit from toc <span class="token operator">--</span><span class="token operator">></span>
-```cpp
-<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h2>Getting connections</h2>
+<p>Once we've got a way to add connections, we have to be able to get that list of connections back again - and so we need to add that to <code>Node</code>; it's fairly straightforward, we can have a function that will just return a copy of the _connections vector:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
   <span class="token comment">// ...</span>
   std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Connection<span class="token operator">*</span><span class="token operator">></span> <span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
