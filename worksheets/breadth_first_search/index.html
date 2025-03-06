@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../assets/css/style.css">
+  <link href="../assets/css/prism.css" rel="stylesheet" />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
+    <title>Breadth First Search</title>
+  </head>
+  <body>
+  <div class="container">
+    <h1>Breadth First Search</h1>
+<p>BFS is similar to Depth First Search but rather than going as far into a branch as it can, it checks against all the nodes adjacent to the current node first. By using a queue, it maintains the order of nodes to ensure it completely explores one &quot;level&quot; of the graph before going deeper (so further away from the starting node). It will find the path with the fewest edges to every node in the graph from a given start point; this may not be the &quot;cheapest&quot; path to that node as BFS does not factor in edge weights / costs.</p>
+<h2>Modifying Node</h2>
+<p>To get a path out of a traversal we need to be able to represent the backlinks between nodes. We do that by adding a parent property to the <code>Node</code> class and a pair of get and set functions to manage it:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token comment">// ...</span>
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+  <span class="token keyword">void</span> <span class="token function">setParent</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Node<span class="token operator">*</span> <span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  Node<span class="token operator">*</span> _parent<span class="token punctuation">{</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span></code></pre>
+<p>These new functions need to be given suitable definitions in <code>node.cpp</code>:</p>
+<h3><code>node.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">setParent</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _parent <span class="token operator">=</span> parent<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Node<span class="token operator">*</span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> _parent<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Implementing BFS</h2>
+<p>With <code>Node</code> modified suitably, we can add a <code>bfs</code> function to <code>Graph</code>:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+  Node<span class="token operator">*</span> <span class="token function">bfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Which we can then implement in <code>graph.cpp</code>:</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;queue></span></span>
+<span class="token comment">// ... </span>
+Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">bfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  std<span class="token double-colon punctuation">::</span>queue<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> frontier<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> visited<span class="token punctuation">;</span>
+
+  <span class="token comment">// find the start node and add it to the frontier queue</span>
+  Node<span class="token operator">*</span> start <span class="token operator">=</span> _nodes<span class="token punctuation">[</span>startIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  frontier<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>frontier<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">auto</span> current <span class="token operator">=</span> frontier<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    frontier<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// return the node if it's the target</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> target<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> current<span class="token punctuation">;</span>
+
+    <span class="token comment">// add any unvisited connections to the queue</span>
+    <span class="token keyword">auto</span> connections <span class="token operator">=</span> current<span class="token operator">-></span><span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> connection <span class="token operator">:</span> connections<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token keyword">auto</span> next <span class="token operator">=</span> connection<span class="token operator">-></span>to<span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>visited<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>
+        visited<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// set the parent to current so we can trace the path back</span>
+        next<span class="token operator">-></span><span class="token function">setParent</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        frontier<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We have to be a little careful if our algorithm sets a value on a node; we need to ensure that it is reset before we run the algorithm again. This is because the parent value is used to trace the path back to the start node, so if we don't reset it, we will get the path from the last search rather than the current one. To reset it (or any other values) we can add a <code>reset</code> function to the <code>Node</code> class:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+  <span class="token keyword">void</span> <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>And implement it in <code>node.cpp</code>:</p>
+<h3><code>node.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _parent <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We can then call this function on all nodes in the graph before running the BFS algorithm:</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp">Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">bfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  std<span class="token double-colon punctuation">::</span>queue<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> frontier<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> visited<span class="token punctuation">;</span>
+
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> node <span class="token operator">:</span> _nodes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    node<span class="token operator">-></span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Testing BFS</h2>
+<p>We can test this function by adding to <code>main.cpp</code> and calling it:</p>
+<h3><code>main.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+
+  result <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">bfs</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"found node: "</span> <span class="token operator">&lt;&lt;</span> result<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token char">'\n'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"failed to find specified node with bfs\n"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>Task:</strong> Implement a function to print the path from the target node back to the start node in <code>main</code>. You will have to make use of <code>getParent()</code> to do this. It will come out in reverse order, consider how you could reverse it to get the path from start to target.</p>
+<p><strong>Task:</strong> Try testing the BFS function with a larger graph - try doubling the number of nodes and increasing connections. Check it works in the same way as you did with DFS. What about other edge cases like disconnected nodes?</p>
+<p><strong>Task:</strong> For both DFS and BFS, what happens if you provide an invalid start node index? How could you handle this? Try it out and see what happens - then try to fix it!</p>
+
+  </div>
+	<script type="module" async>import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"startOnLoad":true,"loadOnSave":true}));</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

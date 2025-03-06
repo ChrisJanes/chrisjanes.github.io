@@ -1,0 +1,246 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../assets/css/style.css">
+  <link href="../assets/css/prism.css" rel="stylesheet" />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
+    <title>Graph Worksheet</title>
+  </head>
+  <body>
+  <div class="container">
+    <h1>Graph Worksheet <!-- omit from toc --></h1>
+<style>
+.mermaid {
+  text-align:center;
+}
+</style>
+<pre class="mermaid">  graph LR;&#10;    A((&quot;&nbsp;&nbsp;&nbsp;A&nbsp;&nbsp;&nbsp;&quot;))&#10;    B((&quot;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&quot;))&#10;    C((&quot;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;&nbsp;&quot;))&#10;    D((&quot;&nbsp;&nbsp;&nbsp;D&nbsp;&nbsp;&nbsp;&quot;))&#10;    E((&quot;&nbsp;&nbsp;&nbsp;E&nbsp;&nbsp;&nbsp;&quot;))&#10;&#10;    A&lt;-- 5--&gt;B&#10;    A&lt;-- 6--&gt;D&#10;    D&lt;-- 3 --&gt;C&#10;    D&lt;-- 5 --&gt;E&#10;    E&lt;-- 2 --&gt;B&#10;    C&lt;-- 1 --&gt;E&#10;    C&lt;-- 6 --&gt;A&#10;</pre>
+<p>Before we begin, the code examples in this worksheet build on top of each other - so rather than reproduce entire sets of code that has already been discussed, you may see code snippets with a commented set of ellipses:</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// ...</span></code></pre>
+<p>These are used to mark where code already exists and is being left out for brevity - so as you follow this worksheet, if the code does not compile, just double check you haven't skipped a step and missed out something that was covered earlier and then hidden with the ellipses!</p>
+<p>Building a graph data structure in C++ is not much different from building a Linked List or any other &quot;node&quot; style structure. If we don't already have one, we should create a <code>cpp</code> file that contains our <code>main</code> function - it not only lets us compile our code and test it, but it also gives us a good place to start debugging from.</p>
+<h3><code>main.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span></code></pre>
+<h2>Starting the Graph class</h2>
+<p>Now we can think about the code structure of the Graph; we need a way of representing the collection of Nodes, their connecting Edges and any potential weights we might need - ideally, we should be able to represent nearly any sort of graph with our implementation.</p>
+<p>As a starting point, add a new header file to the project and &quot;stub&quot; out a <code>Graph</code> class definition:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Graph</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token operator">~</span><span class="token function">Graph</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Add an include statement to <code>main.cpp</code> to let us work with our Graph class in that file and while we're here, we might as well create an instance of the class too. Save both files and check it all compiles!</p>
+<h3><code>main.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"graph.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  Graph graph<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Node Representation</h2>
+<p>Before we can add anything else to <code>Graph</code>, we have to think about how we are going to represent the nodes / vertices of a graph. There are several approaches to this, we could use an array to represent them as an <a href="https://en.wikipedia.org/wiki/Adjacency_matrix">adjacency matrix</a> but as we're unlikely to be creating a particularly dense graph we are probably better off going for some form of <a href="https://en.wikipedia.org/wiki/Adjacency_list">adjacency list</a>.</p>
+<p>So we could use something like an array or a <a href="https://en.cppreference.com/w/cpp/container/vector">std::vector</a> that would store store a further list (in this case, another vector) of integer indices that represent the connections between nodes:</p>
+<pre class="language-cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> adjacency_list<span class="token punctuation">;</span>
+adjacency_list<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// add node '0' to the list</span>
+adjacency_list<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// add node '1' and so on</span>
+adjacency_list<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+adjacency_list<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// add an edge between nodes 0 and 1</span>
+adjacency_list<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// between nodes 0 and 2 ...</span>
+adjacency_list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+adjacency_list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>While this is quite straightforward conceptually, it makes things like adding data to each node slightly more complex as we would need a further construct that would map node indices to the data that node should contain. This is not the end of the world and it's definitely functional, but the approach we will take will lean into Object Oriented Programming a little more.</p>
+<p>Add <code>node.h</code> as a new header file; this will contain the declaration of a <code>Node</code> class:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>For an unweighted graph, we can quite easily represent the connections between nodes by having each node instance store pointers to other nodes that it is connected to:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> _connections<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>That's gives us a little more flexibility than the <code>vector</code> of <code>vector</code> of <code>int</code> we had before, but it does now allow us to represent the <strong>cost</strong> of a connection. A solution to this is to have a <code>Connection</code> object that stores both a pointer to a Node and a cost:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Connection</span> <span class="token punctuation">{</span>
+  Node<span class="token operator">*</span> to<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> cost<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span> <span class="token comment">// ...</span></code></pre>
+<p>Note: This leaves us in a slightly strange position, where Connection wants to use the <code>Node</code> class name before the <code>Node</code> class has been declared - which is due to the imperative / procedural nature of C++. We can resolve this by <a href="https://en.wikipedia.org/wiki/Forward_declaration">forward declaring</a> the <code>Node</code> class prior to the declaration of <code>Connection</code>:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Connection</span> <span class="token punctuation">{</span>
+  Node<span class="token operator">*</span> to<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> cost<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>This works because C++ allows us to multiple declarations of the same object - it only has issue with multiple definitions. Notice how the forward declaration offers no details about <code>Node</code> other than the name - this saves us duplicating the Node declaration but it can also cause us errors. If we tried to call a method on the <code>to</code> pointer in <code>Connection</code> or access a property we would get an error about an <a href="https://learn.microsoft.com/en-us/cpp/c-language/incomplete-types">incomplete type</a>.</p>
+<p><strong>Task:</strong> With <code>Connection</code> declared, change the <code>_connection</code> vector to store <code>Connection</code> pointers instead of <code>Node</code> pointers.</p>
+<h2>Adding Connections</h2>
+<p>Now we've got a way to represent a connection from one node to another along with the cost of that edge, we need a way to add connections between nodes.</p>
+<p>The start of that is going to be in <code>Node</code>:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">void</span> <span class="token function">addConnection</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> to<span class="token punctuation">,</span> <span class="token keyword">int</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+<span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>We add the declaration of the member function <code>addFunction</code> to the <code>Node</code> class declaration - but now we need a definition. To keep our code &quot;clean&quot; and to minimise the risk of encountering a multiple definition error, we should put the definition in a separate translation unit (i.e. a new cpp file).</p>
+<h3><code>node.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"node.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">addConnection</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> to<span class="token punctuation">,</span> <span class="token keyword">int</span> cost<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span></code></pre>
+<p>The easiest approach here is to just add the new connection without checking if there is already a connection that links this node with the <code>to</code> node:</p>
+<h3><code>node.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">addConnection</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> to<span class="token punctuation">,</span> <span class="token keyword">int</span> cost<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  _connections<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">new</span> Connection<span class="token punctuation">{</span>to<span class="token punctuation">,</span> cost<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>As soon as we see the use of <code>new</code> we should be thinking about how that memory is cleared up - in this case, it makes sense to have a destructor for <code>Node</code> that will delete all the <code>Connection</code> instances that the node contains when the node is destroyed:</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token operator">~</span><span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> connection <span class="token operator">:</span> _connections<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token keyword">delete</span> connection<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+
+## Getting connections
+
+Once we<span class="token number">'</span>ve got a way to add connections<span class="token punctuation">,</span> we have to be able to get that list of connections back again <span class="token operator">-</span> <span class="token operator">and</span> so we need to add that to `Node`<span class="token punctuation">;</span> it<span class="token number">'</span>s fairly straightforward<span class="token punctuation">,</span> we can have a function that will just <span class="token keyword">return</span> a copy of the _connections vector<span class="token operator">:</span>
+
+### `node<span class="token punctuation">.</span>h` <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> omit from toc <span class="token operator">--</span><span class="token operator">></span>
+```cpp
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Connection<span class="token operator">*</span><span class="token operator">></span> <span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+<span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h3><code>node.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Connection<span class="token operator">*</span><span class="token operator">></span> <span class="token class-name">Node</span><span class="token double-colon punctuation">::</span><span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> _connections<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Building a Graph</h2>
+<p>Now we have a way to add and retrieve connections to a node, we can add some further implementation to <code>Graph</code> so we can add nodes and specify connections between them. <code>Graph</code> needs to know about the Node objects that make it up, so it needs a way to track that information - because <code>Node</code> is relatively self-contained, we can just maintain a vector of pointers to <code>Node</code> instances:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"node.h"</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Graph</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token operator">~</span><span class="token function">Graph</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> node <span class="token operator">:</span> _nodes<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token keyword">delete</span> node<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> _nodes<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>We include the node header here so C++ understands the Node type in the vector declaration - we could forward declare Node again, as long as we then included the header in a suitable <a href="https://en.wikipedia.org/wiki/Translation_unit_(programming)">translation unit</a> (i.e. <code>graph.cpp</code>), some <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine#physicaldependencies">coding standards</a> call for that approach wherever possible - but I tend to prefer the approach we are using where we only forward declare when we absolutely have to!</p>
+<p>We have specified a destructor for <code>Graph</code> here too - that will delete all the <code>Node</code> instances that the graph contains when the graph is destroyed. This is a good practice to get into, as it ensures that we don't leak memory when we are done with the graph.</p>
+<p>Now we need a way to add a node to the graph - as Node is so simple, that is straightforward:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+
+  <span class="token keyword">int</span> <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>We now need to define <code>addNode</code>, so add a new file to the project - <code>graph.cpp</code>:</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"graph.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span></code></pre>
+<p><code>addNode</code> should instantiate a new instance of <code>Node</code> add it to the <code>_nodes</code> vector and then return the new nodes index in the vector.</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _nodes<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>_nodes<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We use the <code>new</code> keyword to instantiate Node and store it on the heap, <code>new</code> returns the memory address of the space it has allocated which forms the pointer we use to access that instance of <code>Node</code>. The return takes the new size of the _nodes vector, subtracts 1 from it (as c++ is 0-indexed and so the index of the <em>n</em>th element is <em>n</em>-1).</p>
+<p>The <code>size()</code> method on <code>std::vector</code> returns a type called <code>size_t</code> rather than an integer - <code>size_t</code> is an unsigned integer type (so it cannot represent negative values) that is sized according to the target platform to represent the maximum size of a theoretically possible object of any type (and never being less than 2 bytes in size).</p>
+<p>Which is a long way of saying it's bigger than we need, so we can safely &quot;<a href="https://learn.microsoft.com/en-us/cpp/cpp/casting">cast</a>&quot; it to <code>int</code> for our purposes.</p>
+<p>With that implemented, we can tell the graph about connections between nodes:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+
+  <span class="token keyword">int</span> <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token function">connectNodes</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">connectNodes</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> cost<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _nodes<span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token operator">-></span><span class="token function">addConnection</span><span class="token punctuation">(</span>_nodes<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">,</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This gives us the ability to represent a directed, weighted graph with a set of nodes that do not contain any data.</p>
+<p><strong>Task:</strong> Modify the implementation to make the graph bi-directional (undirected) - this will require you to change <code>connectNodes</code> to add a connection from <code>b</code> to <code>a</code> as well as from <code>a</code> to <code>b</code>.</p>
+<h2>Testing the Graph</h2>
+<p>With the graph implemented, we can test it works by adding some nodes and connections in <code>main.cpp</code>.</p>
+<h3><code>main.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"graph.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  Graph graph<span class="token punctuation">;</span>
+
+  <span class="token keyword">int</span> a <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> b <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> c <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> c<span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>Task:</strong> Use the debugger to step through the functions, use the debugging tools to examine the structure of the graph as nodes and connections are added.</p>
+<p><strong>Task:</strong> Add checks to <code>connectNodes</code> to ensure that the indices <code>a</code> and <code>b</code> are valid indices in the <code>_nodes</code> vector. Are there any other places that could be improved with some error checking?</p>
+
+  </div>
+	<script type="module" async>import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"startOnLoad":true,"loadOnSave":true}));</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

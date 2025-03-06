@@ -1,0 +1,201 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../assets/css/style.css">
+  <link href="../assets/css/prism.css" rel="stylesheet" />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
+    <title>Depth First Search</title>
+  </head>
+  <body>
+  <div class="container">
+    <h1>Depth First Search</h1>
+<p>Depth First Search (DFS) explores a graph without any predefined strategy for choosing the next node beyond depth-first expansion. We can use DFS as a form of exploration, by navigating an otherwise unknown graph, or we can use it to search for a specific node if we do not care about finding the shortest &quot;path&quot; across the graph from the start point to the target node.</p>
+<p>This outlines the core of the DFS algorithm:</p>
+<ul>
+<li>Mark the start node as visited.</li>
+<li>Visit an unvisited neighbour and repeat the process.</li>
+<li>If no unvisited neighbours remain, backtrack.</li>
+<li>Continue until all reachable nodes are visited.</li>
+</ul>
+<h2>Modifying Node</h2>
+<p>We can start by adding a <code>dfs</code> function to <code>Graph</code> - but we need to have a think about what it is we're using DFS for. If we are searching the graph, we want to have something to search for - which usually means either a data value or some other form of identifying the a node. That needs us to go back to <code>Node</code> and add something extra; for now, we'll add a name.</p>
+<h3><code>node.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token comment">// ...</span>
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Node</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">)</span> <span class="token operator">:</span> _name<span class="token punctuation">{</span>name<span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token comment">// ...</span>
+  std<span class="token double-colon punctuation">::</span>string <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>string _name<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Add a definition for <code>getName</code> in <code>node.cpp</code> to return the <code>_name</code> property. This change has also added a constructor to <code>Node</code>, requiring us to provide a name for any Node object we instantiate (as we have specified a constructor, the compiler will no longer generate a default one for us) - so we have to account for that in <code>Graph</code>:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token comment">// ...</span>
+<span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ..</span>
+  <span class="token keyword">int</span> <span class="token function">addNode</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token comment">// .. </span>
+<span class="token punctuation">}</span></code></pre>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _nodes<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">Node</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// pass the name into the new node</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>_nodes<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Implementing DFS</h2>
+<p>and with those changes made, we can now implement DFS in <code>Graph</code>:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ..</span>
+  Node<span class="token operator">*</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token comment">// .. </span>
+<span class="token punctuation">}</span></code></pre>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp">Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Mark the start node as visited.</span>
+  <span class="token comment">// Visit an unvisited neighbour and repeat the process.</span>
+  <span class="token comment">// If no unvisited neighbours remain, backtrack.</span>
+  <span class="token comment">// Continue until all reachable nodes are visited.</span>
+<span class="token punctuation">}</span></code></pre>
+<p>To perform a DFS, we need to be able to track our progress through the graph in a way that allows us to &quot;backtrack&quot; easily while not exploring nodes we've already explored. With that in mind, we need a couple of containers; a <code>stack</code> to track progress and a <code>set</code> to identify which nodes have been <em>visited</em>. <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> represents a collection of unique objects, they are the code equivalent of a <a href="https://en.wikipedia.org/wiki/Set_(mathematics)">mathematical set</a> and so are ideal for our needs here.</p>
+<p>With those, we can fill out the function:</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stack></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;set></span></span>
+<span class="token comment">// ...</span>
+Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  std<span class="token double-colon punctuation">::</span>stack<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> frontier<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> visited<span class="token punctuation">;</span>
+
+  <span class="token comment">// add the start node to the stack</span>
+  <span class="token keyword">auto</span> start <span class="token operator">=</span> _nodes<span class="token punctuation">[</span>startIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  frontier<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>frontier<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// top() gets us the top element of the stack, pop() then removes it.</span>
+    <span class="token keyword">auto</span> current <span class="token operator">=</span> frontier<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    frontier<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// check if we've found the node we're looking for</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> target<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> current<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>visited<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      visited<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">auto</span> connections <span class="token operator">=</span> current<span class="token operator">-></span><span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+      <span class="token comment">// iterate over all the connections, adding any unvisited nodes to the stack</span>
+      <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">auto</span> edge <span class="token operator">:</span> connections<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>visited<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>edge<span class="token operator">-></span>to<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          frontier<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>edge<span class="token operator">-></span>to<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// target does not exist in the graph</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Recursive DFS</h2>
+<p>With that first version of DFS, we are using an explicit stack and iterating over edges - there is an alternative that has a lower space requirement because it does not require the extra stack storage. Instead, it makes use of a recursive function, which give an implicit stack (via the call stack) - both approaches are valid; they will do the same job though probably while visiting graph nodes in differing orders.</p>
+<p>However, on a large graph the recursive approach risks overflowing the stack memory (a risk with any recursive approach) and so the iterative approach is often considered to be &quot;safer&quot;. With that said, let's add the recursive version - we need to have a way of &quot;starting&quot; the search so we will re-work our <code>Graph</code> API quickly:</p>
+<h3><code>graph.h</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// ..</span>
+  Node<span class="token operator">*</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">,</span> <span class="token keyword">bool</span> useRecursive<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token comment">// .. </span>
+  Node<span class="token operator">*</span> <span class="token function">dfs_iterative</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Node<span class="token operator">*</span> <span class="token function">dfs_recursive</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> node<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span><span class="token operator">&amp;</span> visited<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>To maintain encapsulation and abstraction, we've provided a single public interface to both the dfs functions - a &quot;user&quot; of <code>Graph</code> just calls <code>dfs</code> and they can specify if it should be a recursive search or not with the boolean. We need to move what was in <code>dfs</code> into <code>dfs_iterative</code> in <code>graph.cpp</code> and we'll replace that with the new <code>dfs</code> function:</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// ...</span>
+Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">,</span> <span class="token keyword">bool</span> useRecursive<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>useRecursive<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">auto</span> start <span class="token operator">=</span> _nodes<span class="token punctuation">[</span>startIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> visited<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">dfs_recursive</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> visited<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> 
+
+  <span class="token keyword">return</span> <span class="token function">dfs_iterative</span><span class="token punctuation">(</span>startIndex<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">dfs_iterative</span><span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  std<span class="token double-colon punctuation">::</span>stack<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> frontier<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span> visited<span class="token punctuation">;</span>
+
+  <span class="token comment">// ...</span>
+
+  <span class="token comment">// target does not exist in the graph</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The recursive function is actually quite simple; though it can be a little hard to conceptualise how it works (also true of many recursive functions, sadly!).</p>
+<h3><code>graph.cpp</code> <!-- omit from toc --></h3>
+<pre class="language-cpp"><code class="language-cpp">Node<span class="token operator">*</span> <span class="token class-name">Graph</span><span class="token double-colon punctuation">::</span><span class="token function">dfs_recursive</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> node<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span><span class="token operator">&amp;</span> visited<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> target<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token comment">// found the target so return the node pointer</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> target<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> node<span class="token punctuation">;</span>
+
+  visited<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">auto</span> connections <span class="token operator">=</span> node<span class="token operator">-></span><span class="token function">getConnections</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// iterate over all the connections</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> edge <span class="token operator">:</span> connections<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>visited<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>edge<span class="token operator">-></span>to<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// recursively call the function with the node this edge points to</span>
+      Node<span class="token operator">*</span> result <span class="token operator">=</span> <span class="token function">dfs_recursive</span><span class="token punctuation">(</span>edge<span class="token operator">-></span>to<span class="token punctuation">,</span> visited<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// if this returns a non-null value, the entire recursive stack "unrolls".</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// catch the case where the target does not exist in the graph.</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Testing</h2>
+<p>To see if this works, we need a graph - we can build one in <code>main.cpp</code>:</p>
+<h3><code>main.cpp</code></h3>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Graph graph<span class="token punctuation">;</span>
+
+  <span class="token keyword">int</span> a <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> b <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> c <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> d <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">addNode</span><span class="token punctuation">(</span><span class="token string">"D"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 0 to 1</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> d<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 to 3</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>d<span class="token punctuation">,</span> d<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3 to 3</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> c<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 0 to 2</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 to 2</span>
+  graph<span class="token punctuation">.</span><span class="token function">connectNodes</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 2 to 0</span>
+
+  <span class="token keyword">auto</span> result <span class="token operator">=</span> graph<span class="token punctuation">.</span><span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"D"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>Task:</strong> Get the Graph and Node classes implemented and once the project compiles, use the debugger to work through the recursive search - use pen and paper to sketch the graph out and plot how the nodes are visited. Try a bigger graph with more nodes.</p>
+<p><strong>Task:</strong> Try a variety of different graph setups, what happens if the graph is disconnected (i.e. there are two separate &quot;islands&quot; of nodes)? What happens if the target node is not in the graph? What if there are cycles present? Think ahead and see if the code will handle these cases, if not, consider how to modify it to do so.</p>
+
+  </div>
+	<script type="module" async>import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"startOnLoad":true,"loadOnSave":true}));</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
