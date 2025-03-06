@@ -11,6 +11,10 @@
   </head>
   <body>
   <div class="container">
+  <div class="navbar">
+<ul><li><a href="/graphs/">Graphs</a><ul><li><a href="/breadth_first_search/">Depth First Search</a></li>
+<li><a href="/depth_first_search/">Depth First Search</a></li></ul></li></ul>
+  </div>
     <h1>Depth First Search</h1>
 <p>Depth First Search (DFS) explores a graph without any predefined strategy for choosing the next node beyond depth-first expansion. We can use DFS as a form of exploration, by navigating an otherwise unknown graph, or we can use it to search for a specific node if we do not care about finding the shortest &quot;path&quot; across the graph from the start point to the target node.</p>
 <p>This outlines the core of the DFS algorithm:</p>
@@ -21,7 +25,7 @@
 <li>Continue until all reachable nodes are visited.</li>
 </ul>
 <h2>Modifying Node</h2>
-<p>We can start by adding a <code>dfs</code> function to <code>Graph</code> - but we need to have a think about what it is we're using DFS for. If we are searching the graph, we want to have something to search for - which usually means either a data value or some other form of identifying the a node. That needs us to go back to <code>Node</code> and add something extra; for now, we'll add a name.</p>
+<p>We can start by adding a <code>dfs</code> function to <code>Graph</code> - but we need to have a think about what it is we're using DFS for. If we are searching the graph, we want to have something to search for - which usually means either a data value or some other form of identifying a node. That needs us to go back to <code>Node</code> and add something extra; for now, we'll add a name.</p>
 <h3><code>node.h</code> <!-- omit from toc --></h3>
 <pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
 <span class="token comment">// ...</span>
