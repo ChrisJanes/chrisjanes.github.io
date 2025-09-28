@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="352.70697"
+   height="346.76248"
+   viewBox="0 0 88.176743 86.69062"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-5.9116272,-6.6546899)">
+    <circle
+       style="fill:#14b8a6;fill-opacity:0.4238;stroke:#14b8a6;stroke-width:0.377953;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       id="path1"
+       cx="50"
+       cy="50"
+       r="33.685497" />
+    <path
+       style="fill:none;fill-opacity:0.263048;stroke:#14b8a6;stroke-width:0.377952;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       d="M 5.9116272,50 H 94.088373"
+       id="path2" />
+    <path
+       style="fill:none;fill-opacity:0.263048;stroke:#14b8a6;stroke-width:0.377952;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       d="M 50,6.6546899 V 93.34531"
+       id="path3" />
+    <path
+       style="fill:none;fill-opacity:0.263048;stroke:#14b8a6;stroke-width:0.377952;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       d="M 49.97095,49.97095 73.841833,26.10007"
+       id="path4" />
+    <path
+       style="fill:none;fill-opacity:0.263048;stroke:#14b8a6;stroke-width:0.377952;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       d="M 73.74895,26.13103 V 49.847107"
+       id="path5" />
+    <path
+       style="fill:none;fill-opacity:0.263048;stroke:#14b8a6;stroke-width:0.377952;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       id="path6"
+       d="M -45.249279,54.72882 A 6.687562,6.687562 0 0 1 -49.9781,56.687562 V 50 Z"
+       transform="rotate(-90)" />
+    <text
+       xml:space="preserve"
+       style="font-size:3px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f7fbf1;fill-opacity:1;stroke:none;stroke-width:0.103937;stroke-dasharray:none;stroke-dashoffset:0.907087"
+       x="56.614491"
+       y="48.295269"
+       id="text7"><tspan
+         id="tspan7"
+         style="fill:#f7fbf1;fill-opacity:1;stroke:none;stroke-width:0.103937;stroke-dasharray:none"
+         x="56.614491"
+         y="48.295269">θ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f7fbf1;fill-opacity:1;stroke:none;stroke-width:0.103937;stroke-dasharray:none;stroke-dashoffset:0.907087"
+       x="64.452072"
+       y="42.296673"
+       id="text8"><tspan
+         id="tspan8"
+         style="fill:#f7fbf1;fill-opacity:1;stroke-width:0.103937"
+         x="64.452072"
+         y="42.296673">sin(θ)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f7fbf1;fill-opacity:1;stroke:none;stroke-width:0.103937;stroke-dasharray:none;stroke-dashoffset:0.907087"
+       x="59.023891"
+       y="53.286373"
+       id="text8-1"><tspan
+         id="tspan8-1"
+         style="fill:#f7fbf1;fill-opacity:1;stroke-width:0.103937"
+         x="59.023891"
+         y="53.286373">cos(θ)</tspan></text>
+  </g>
+</svg>
