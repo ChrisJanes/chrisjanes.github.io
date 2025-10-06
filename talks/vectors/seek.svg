@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 5 20 20" >
+  <defs>
+    <marker id="arrowHead" viewBox="0 0 12 12" refX="4" refY="5"
+        markerWidth="7" markerHeight="7" orient="auto-start-reverse" fill="context-stroke">
+      <path d="M -5 0 l 10 5 l -10 5 z"/>
+    </marker>
+
+    <path id="boid" d="M 0 0 l -1 -1.25 l 3 1.25 l -3 1.25 z" stroke="context-stroke" fill="context-fill"/>
+  </defs>
+
+  <g transform="translate(10, 10) rotate(5)">
+    <use href="#boid" x="0" y="0" fill="firebrick" stroke="maroon" stroke-width=".1"/>
+    <polyline points="2,0 6,0, 10,0" stroke="green" stroke-width=".15" marker-mid="url(#arrowHead)" />
+    <polyline points="2,0 5,3, 11,9" fill="none" stroke="gray" stroke-width=".15" marker-mid="url(#arrowHead)" />
+    <line x1="6" y1="0" x2="5" y2="3" stroke="blue" stroke-width=".15" marker-end="url(#arrowHead)" />
+
+    <g transform="rotate(-5)">
+      <text x="5" y="6" text-anchor="middle" font-size=".04em" font-family="sans-serif">Desired</text>
+      <text x="6" y="0" text-anchor="middle" font-size=".04em" font-family="sans-serif">Velocity</text>
+      <text x="6.75" y="2.5" text-anchor="middle" font-size=".04em" font-family="sans-serif">Steering</text>
+    </g>
+  </g>
+
+  <use href="#boid" x="20" y="20" fill="green" stroke="darkgreen" stroke-width=".1"/>
+</svg>

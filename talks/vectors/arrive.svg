@@ -1,0 +1,16 @@
+<svg viewBox="5 5 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="boid" d="M 0 0 l -1 -1.25 l 3 1.25 l -3 1.25 z" stroke="context-stroke" fill="context-fill" />
+    <marker markerWidth="4.7" markerHeight="3.4" refX="1.5" refY="1.25" orient="auto" id="marker12"
+       viewBox="0 0 4.6904344 3.42307692" preserveAspectRatio="xMidYMid" markerUnits="userSpaceOnUse">
+      <path d="M 1,1.25 0,0 3,1.25 0,2.5 Z" fill="#8c8c8c" stroke="#2c2c2c" stroke-width="0.1" opacity="0.5" />
+    </marker>
+  </defs>
+  <use href="#boid" x="0" y="0" fill="#b22222" stroke="#800000" stroke-width="0.1" transform="rotate(103.15531,0.99294121,8.4364571)" />
+	<g transform="translate(1.9,5)">
+  <circle style="fill:none;stroke:#8c8c8c;stroke-width:0.1;" cx="18.6875" cy="11.250706" r="1.21875" />
+	<path style="fill:none;stroke:#8c8c8c;stroke-width:0.1;stroke-dasharray:0.3, 0.1;" d="m 18.6875,9.469456 v 3.5625" />
+	<path style="fill:none;stroke:#8c8c8c;stroke-width:0.1;stroke-dasharray:0.3, 0.1" d="m 20.46875,11.250706 h -3.5625" />
+  </g>
+  <path style="fill:none;stroke:#8c8c8c;stroke-width:0.1;marker-mid:url(#marker12)" d="m 8.9925591,11.298398 c -0.1551646,0.617731 -0.137543,1.564128 -0.1227667,1.935501 0.034562,0.868638 0.1604095,1.82656 0.3881624,2.733321 0.3091398,1.230789 0.7292698,2.073882 1.1021442,2.630356 0.475876,0.710192 1.130128,1.338634 2.019179,1.626604 1.204111,0.39002 2.314412,0.293031 3.263037,-0.0085 1.0024,-0.318669 1.896386,-0.888191 2.632124,-1.491456 0.372587,-0.305501 0.708744,-0.622803 1.003399,-0.926911 0.294655,-0.304108 0.547807,-0.595022 0.754386,-0.847749 0.206579,-0.252726 0.366585,-0.467265 0.474946,-0.618622 0.108361,-0.151399 0.165077,-0.239575 0.165077,-0.239575" />
+</svg>
