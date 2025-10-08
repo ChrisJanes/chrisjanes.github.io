@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 20 120 110">
+  <style>
+    :root {
+      --color-b: black; /* Blue */
+      --color-x: #DB4437; /* Red */
+      --color-y: #0F9D58; /* Green */
+      --color-helper: #757575; /* Grey */
+    }
+    .vector {
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    .helper-line {
+      stroke-width: 1.5;
+      stroke-dasharray: 3 2;
+    }
+    .label {
+      font-family: 'ui-sans-serif', 'system-ui', sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+  </style>
+
+  <defs>
+    <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5"
+        markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="context-stroke">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+   <line class="vector" stroke="var(--color-x)" x1="20" y1="120" x2="80" y2="60" marker-end="url(#arrowHead)"/>
+  <text class="label" fill="var(--color-x)" x="42" y="90">
+      <tspan>a</tspan><tspan dx="-0.30em" dy="-0.1em">&#8407;</tspan>
+  </text>
+
+  <line class="helper-line" stroke="var(--color-b)" x1="20" y1="120" x2="35" y2="105" marker-end="url(#arrowHead)"/>
+  <text class="label" fill="var(--color-b)" x="22" y="110">
+      a <tspan dx="-0.75em">&#710;</tspan>
+  </text>
+
+</svg>
