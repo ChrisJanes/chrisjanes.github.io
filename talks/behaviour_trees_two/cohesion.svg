@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 105.83333 105.83333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="cohesion.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4702524"
+     inkscape:cx="388.3687"
+     inkscape:cy="168.67852"
+     inkscape:window-width="2267"
+     inkscape:window-height="1328"
+     inkscape:window-x="1929"
+     inkscape:window-y="16"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="Diamond"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Diamond"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.45)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 Z"
+         id="path19" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker43"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path43" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-opacity:0.271984;stroke:#ff0505;stroke-width:0.486215;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker43)"
+       d="m 50.283792,51.70748 4.440357,-9.978008"
+       id="path42"
+       sodipodi:nodetypes="cc"
+       inkscape:label="steering_force" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#179a00;stroke-width:0.388972;stroke-dasharray:none;stroke-opacity:1"
+       d="M -32.13013,55.027266 -36.478011,30.068237"
+       id="path39"
+       sodipodi:nodetypes="cc"
+       inkscape:label="connector" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#179a00;stroke-width:0.388972;stroke-dasharray:none;stroke-opacity:1"
+       d="M 55.733511,39.289074 58.766093,26.291485"
+       id="path39-5"
+       sodipodi:nodetypes="cc"
+       inkscape:label="connector" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#179a00;stroke-width:0.388972;stroke-dasharray:none;stroke-opacity:1"
+       d="M 55.773274,39.144296 36.282719,33.018172"
+       id="path39-5-9"
+       sodipodi:nodetypes="cc"
+       inkscape:label="connector" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#179a00;stroke-width:0.388972;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Diamond)"
+       d="M 76.231128,43.958587 55.722578,39.041332"
+       id="path39-5-9-4"
+       sodipodi:nodetypes="cc"
+       inkscape:label="connector" />
+    <path
+       id="path13"
+       d="m -23.343532,-1.9643335 -4,-5.9999993 14,5.9999993 -14,6.000001 z"
+       stroke="context-stroke"
+       fill="#000000"
+       inkscape:transform-center-x="187.63687"
+       inkscape:transform-center-y="-15.019283"
+       style="fill:#565656;fill-opacity:1;stroke:#2c2c2c;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="other_boid" />
+    <path
+       id="path5"
+       d="m 48.827394,51.694205 -3.889719,-5.834578 13.614016,5.834578 -13.614016,5.834579 z"
+       stroke="context-stroke"
+       fill="#000000"
+       inkscape:transform-center-x="182.46368"
+       inkscape:transform-center-y="-14.605198"
+       style="fill:#179a00;fill-opacity:1;stroke:#095700;stroke-width:0.291729;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="current_boid"
+       sodipodi:insensitive="true" />
+    <circle
+       style="fill:#469039;fill-opacity:0.271984;stroke:#656565;stroke-width:0.291729;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="51.663647"
+       cy="51.613174"
+       r="34.035042"
+       sodipodi:insensitive="true"
+       inkscape:label="neighbourhood" />
+    <use
+       id="use126"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(-50.143023,18.769425,-35.026701)" />
+    <use
+       id="use127"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(34.890334,-49.321291,105.73279)" />
+    <use
+       id="use128"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(43.235602,-30.546521,142.98181)" />
+    <use
+       id="use129"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(31.558699,-32.111318,153.89164)" />
+    <use
+       id="use130"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(31.235136,-2.0742215,203.61737)" />
+    <use
+       id="use131"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(7.2568978,-722.63296,811.43811)" />
+    <use
+       id="use132"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(26.417682,-201.73897,133.27973)" />
+    <use
+       id="use133"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(-17.402593,225.0201,-69.485692)" />
+    <use
+       id="use134"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(-6.0822167,684.25368,-1047.7641)" />
+    <use
+       id="use135"
+       inkscape:spray-origin="#path13"
+       xlink:href="#path13"
+       transform="rotate(43.383493,-95.900331,132.93536)" />
+  </g>
+</svg>

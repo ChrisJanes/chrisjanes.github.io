@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="600"
+   height="600"
+   viewBox="0 0 150 150"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.333333;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       id="rect3"
+       width="151.18111"
+       height="151.18111"
+       x="0"
+       y="0.1751415" />
+    <ellipse
+       style="fill:#00a076;fill-opacity:1;stroke:#000000;stroke-width:0.333333;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       id="path1-5"
+       cx="77.425224"
+       cy="26.212654"
+       rx="11.148949"
+       ry="10.240516" />
+    <g
+       id="g3">
+      <ellipse
+         style="fill:#d87776;fill-opacity:1;stroke:#000000;stroke-width:0.333333;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+         id="path1"
+         cx="26.867508"
+         cy="73.454483"
+         rx="11.148949"
+         ry="10.240516" />
+      <path
+         style="fill:#6d6d6e;fill-opacity:0.483333;stroke:none;stroke-width:0.402792;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+         d="M 37.724297,71.237362 108.39942,45.428428 c 0,0 5.46136,12.352468 5.46136,28.110211 0,15.757743 -5.46136,28.110211 -5.46136,28.110211 L 37.724297,75.691922 c 0,0 0.287888,-1.477715 0.287888,-2.22728 0,-0.749566 -0.287888,-2.22728 -0.287888,-2.22728 z"
+         id="path2" />
+    </g>
+    <g
+       id="g2"
+       transform="translate(-1.3978291,7.8813675)">
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.333333;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+         id="rect2"
+         width="56.692913"
+         height="18.897638"
+         x="48.051373"
+         y="115.91774"
+         rx="4.2519684"
+         ry="4.2519684" />
+      <text
+         xml:space="preserve"
+         style="font-size:6.37523px;line-height:1;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.708358;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+         x="76.34024"
+         y="127.14714"
+         id="text2"><tspan
+           id="tspan2"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.708358"
+           x="76.34024"
+           y="127.14714">IsEnemyVisible</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.333333;stroke-dasharray:none;stroke-dashoffset:0.907087;stroke-opacity:1"
+       d="m 77.01049,26.136362 c 0,0 12.763943,12.691455 17.045455,20.979022 4.281512,8.287568 6.905595,27.097904 6.905595,27.097904"
+       id="path3" />
+  </g>
+</svg>
