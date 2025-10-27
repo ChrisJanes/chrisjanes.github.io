@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 50 150 75">
+  <style>
+    :root {
+      --color-a: #4285F4; /* Google Blue */
+      --color-b: #DB4437; /* Google Red */
+      --color-c: #0F9D58; /* Google Green */
+    }
+    .vector {
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    .vector-a {
+      stroke: var(--color-a);
+      fill: var(--color-a);
+      marker-end: url(#arrowHead);
+    }
+    .vector-b {
+      stroke: var(--color-b);
+      color: var(--color-b);
+      marker-end: url(#arrowHead);
+    }
+    .vector-c {
+      stroke: var(--color-c);
+      color: var(--color-c);
+      marker-end: url(#arrowHead);
+    }
+    .label {
+      font-family: 'ui-sans-serif', 'system-ui', sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+  </style>
+
+  <defs>
+    <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5"
+        markerWidth="4" markerHeight="4" orient="auto-start-reverse" fill="context-stroke">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <line class="vector vector-a" x1="20" y1="100" x2="100" y2="60"/>
+  <text class="label" x="55" y="70" fill="var(--color-a)"><tspan>a</tspan>
+    <tspan dx="-0.55em" dy="-0.1em">&#8407;</tspan></text>
+
+  <line class="vector vector-b" x1="100" y1="60" x2="160" y2="100"/>
+  <text class="label" x="135" y="69" fill="var(--color-b)"><tspan>b</tspan>
+    <tspan dx="-0.55em" dy="-0.1em">&#8407;</tspan></text>
+
+  <line class="vector vector-c" x1="20" y1="100" x2="160" y2="100"/>
+  <text class="label" x="90" y="112" fill="var(--color-c)"><tspan>c</tspan><tspan dx="-0.30em" dy="-0.1em">&#8407;</tspan>
+    <tspan dx="0.4em" dy="0.1em"> = </tspan>
+    <tspan>a</tspan><tspan dx="-0.3em" dy="-0.1em">&#8407;</tspan>
+    <tspan dx="0.4em" dy="0.1em"> + </tspan>
+    <tspan>b</tspan><tspan dx="-0.3em" dy="-0.1em">&#8407;</tspan></text>
+</svg>
