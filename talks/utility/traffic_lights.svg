@@ -1,0 +1,55 @@
+<svg
+   viewBox="-1 -1 103 53"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <marker style="overflow:visible" id="ConcaveTriangle" refX="3" refY="0" orient="auto-start-reverse" markerWidth="1" markerHeight="1" viewBox="0 0 1 1" preserveAspectRatio="xMidYMid">
+      <path transform="scale(0.7)" d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z" style="fill:context-stroke;stroke:none"/>
+    </marker>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-54.597043,-21.835982)">
+    <g
+       id="g10"
+       transform="translate(0,-0.41855179)">
+      <rect class="traffic_light" width="15" height="35" x="55" y="33" rx="4.5" ry="4.5" />
+      <circle class="light inactive" cx="62.5" cy="39" r="4.7" />
+      <circle class="light inactive" cx="62.5" cy="50.5" r="4.7" />
+      <circle class="light green" cx="62.5" cy="62" r="4.7" />
+    </g>
+    <g transform="translate(28.502656,-0.41855179)">
+      <rect class="traffic_light" width="15" height="35" x="55" y="33" rx="4.5" ry="4.5" />
+      <circle class="light inactive" cx="62.5" cy="39" r="4.7" />
+      <circle class="light amber" cx="62.5" cy="50.5" r="4.7" />
+      <circle class="light inactive" cx="62.5" cy="62" r="4.7" />
+    </g>
+    <g transform="translate(57.005312,-0.41855179)">
+      <rect class="traffic_light" width="15" height="35" x="55" y="33" rx="4.5" ry="4.5" />
+      <circle class="light red" cx="62.5" cy="39" r="4.7" />
+      <circle class="light inactive" cx="62.5" cy="50.5" r="4.7" />
+      <circle class="light inactive" cx="62.5" cy="62" r="4.7" />
+    </g>
+    <g transform="translate(85.507968,-0.3820234)">
+      <g transform="translate(0,-0.03652839)">
+        <rect class="traffic_light" width="15" height="35" x="55" y="33" rx="4.5" ry="4.5" />
+        <circle class="light red" cx="62.5" cy="39" r="4.7" />
+        <circle class="light amber" cx="62.5" cy="50.5" r="4.7" />
+        <circle class="light inactive" cx="62.5" cy="62" r="4.7" />
+      </g>
+      <path class="line" d="m -17.33116,33.749553 c 2.244142,-3.618931 3.77986,-4.447848 8.0869975,-4.447848 4.8934452,0 5.7215487,0.384132 7.8039504,3.376321" />
+      <path class="line" d="m 11.188864,33.749553 c 2.244142,-3.618931 3.77986,-4.447848 8.086997,-4.447848 4.893446,0 5.721549,0.384132 7.803951,3.376321" />
+      <path class="line" d="m 39.584328,33.749553 c 2.244142,-3.618931 3.77986,-4.447848 8.086997,-4.447848 4.893446,0 5.721549,0.384132 7.803951,3.376321" />
+      <path class="line" d="m 56.5,66.62 c 0,0 -0.89,4.37 -7.01,6.1 -6.12,1.74 -49.72,1.8 -58.41,0.12 -7.12,-1.27 -8.1,-4.08 -8.1,-4.08" />
+    </g>
+  </g>
+  <g class="clock" transform="matrix(0.2701194,0,0,0.2701194,47.738084,44.84069)">
+    <path d="M 21.25,8.2 A 10,10 0 1 0 16,21.16" />
+    <path d="m 12,6 v 6 l 4,2 m 4,-2 v 5 m 0,4 h 0.01" />
+  </g>
+  <g class="clock" transform="matrix(0.2701194,0,0,0.2701194,47.738084,-0.26893733)">
+    <path d="M 21.25,8.2 A 10,10 0 1 0 16,21.16" />
+    <path d="m 12,6 v 6 l 4,2 m 4,-2 v 5 m 0,4 h 0.01" />
+  </g>
+</svg>
